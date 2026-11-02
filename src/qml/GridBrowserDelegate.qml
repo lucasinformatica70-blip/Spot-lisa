@@ -20,15 +20,27 @@ AbstractBrowserDelegate {
 
     readonly property bool hasActiveFocus: activeFocus || focusScope.activeFocus
 
-    readonly property color textColor: highlighted || down ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+    readonly property color textColor: highlighted || down ? Kirigami.Theme.highlightedTextColor : Theme.spotifyTextPrimary
 
     onClicked: hasChildren ? open() : enqueue()
+
+    // Spotify-style card background
+    background: Rectangle {
+        radius: Theme.spotifyRadius
+        color: gridEntry.hovered || gridEntry.hasActiveFocus ? Theme.spotifySurfaceElevated : Theme.spotifySurface
+        Behavior on color {
+            ColorAnimation { duration: 120 }
+        }
+    }
 
     // click handler
     contentItem: FocusScope {
         id: focusScope
 
         implicitHeight: childrenRect.height
+
+        Kirigami.Theme.inherit: false
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
 
         TextMetrics {
             id: mainLabelSize
@@ -142,6 +154,7 @@ AbstractBrowserDelegate {
             ColumnLayout {
                 Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.smallSpacing
                 spacing: 0
 
                 LabelWithToolTip {
@@ -160,8 +173,8 @@ AbstractBrowserDelegate {
                     Layout.fillWidth: true
                     Layout.maximumHeight: gridEntry.displaySecondaryText ? mainLabelSize.boundingRect.height : mainLabelSize.boundingRect.height * 2
                     Layout.alignment: Kirigami.Settings.isMobile ? Qt.AlignLeft : Qt.AlignVCenter
-                    Layout.leftMargin: Kirigami.Settings.isMobile ? 0 : Kirigami.Units.largeSpacing
-                    Layout.rightMargin: Kirigami.Settings.isMobile ? 0 : Kirigami.Units.largeSpacing
+                    Layout.leftMargin: Kirigami.Units.largeSpacing
+                    Layout.rightMargin: Kirigami.Units.largeSpacing
 
                     wrapMode: !Kirigami.Settings.isMobile && gridEntry.displaySecondaryText ? Label.NoWrap : Label.Wrap
                     maximumLineCount: Kirigami.Settings.isMobile ? 1 : 2
@@ -173,8 +186,7 @@ AbstractBrowserDelegate {
                     visible: gridEntry.displaySecondaryText
                     text: gridEntry.secondaryText
 
-                    opacity: Theme.subtitleOpacity
-                    color: gridEntry.textColor
+                    color: Theme.spotifyTextSecondary
 
                     // FIXME: Center-aligned text looks better overall, but
                     // sometimes results in font kerning issues
@@ -184,8 +196,9 @@ AbstractBrowserDelegate {
                     Layout.fillWidth: true
                     Layout.alignment: Kirigami.Settings.isMobile ? Qt.AlignLeft : Qt.AlignVCenter
                     Layout.topMargin: Kirigami.Settings.isMobile ? Kirigami.Units.smallSpacing : 0
-                    Layout.leftMargin: Kirigami.Settings.isMobile ? 0 : Kirigami.Units.largeSpacing
-                    Layout.rightMargin: Kirigami.Settings.isMobile ? 0 : Kirigami.Units.largeSpacing
+                    Layout.leftMargin: Kirigami.Units.largeSpacing
+                    Layout.rightMargin: Kirigami.Units.largeSpacing
+                    Layout.bottomMargin: Kirigami.Units.smallSpacing
 
                     maximumLineCount: Kirigami.Settings.isMobile ? 1 : -1
                     elide: Text.ElideRight

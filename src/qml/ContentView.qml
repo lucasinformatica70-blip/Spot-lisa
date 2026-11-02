@@ -16,13 +16,12 @@ SplitView {
     id: contentViewContainer
 
     property bool showPlaylist
+    property bool showNowPlayingPanel
     property bool showExpandedFilterView
     property Kirigami.ContextDrawer playlistDrawer
     property alias initialIndex: viewManager.initialIndex
     property alias pageProxyModel: pageProxyModel
     property alias viewManager: viewManager
-    property alias playListHiddenCachedWidth: playListContainer.hiddenCachedWidth
-    readonly property alias playListPreferredWidth: playListContainer.preferredWidth
 
     signal viewIndexChanged
 
@@ -145,14 +144,15 @@ SplitView {
         embeddedCategory: Kirigami.Settings.isMobile ? ElisaUtils.Unknown : ElisaApplication.embeddedView
     }
 
-    // sidebar used on desktop
+    // sidebar used on desktop (navigation + library)
     Loader {
         id: desktopSidebar
         active: !Kirigami.Settings.isMobile
         visible: active
 
-        SplitView.minimumWidth: active ? (item as ViewSelector).iconsOnlyMinWidth : 0
-        SplitView.preferredWidth: active ? (item as ViewSelector).wideWidth : 0
+        SplitView.minimumWidth: (status === Loader.Ready) ? (item as Sidebar).iconsOnlyMinWidth : 0
+        SplitView.preferredWidth: (status === Loader.Ready) ? (item as Sidebar).wideWidth : 0
+        SplitView.maximumWidth: (status === Loader.Ready) ? (item as Sidebar).wideWidth * 1.5 : 0
 
         function updateSidebarIndex() {
             if (status === Loader.Ready) {
@@ -160,10 +160,12 @@ SplitView {
             }
         }
 
-        sourceComponent: ViewSelector {
-            displayedViewIndex: model.mapRowFromSource(viewManager.viewIndex)
+        sourceComponent: Sidebar {
+            displayedViewIndex: pageProxyModel.mapRowFromSource(viewManager.viewIndex)
             model: pageProxyModel
-            viewIndex: model.mapRowFromSource(viewManager.viewIndex)
+            viewIndex: pageProxyModel.mapRowFromSource(viewManager.viewIndex)
+            // library only shown on wide screens; narrow screens use the drawer
+            showLibrary: mainWindow.isWideScreen && contentViewContainer.showPlaylist
             onSwitchView: viewIndex => viewManager.openView(model.mapRowToSource(viewIndex))
 
             // Make sure the sidebar stays at minimum width if the scrollbar disappears
@@ -189,7 +191,6 @@ SplitView {
             anchors.fill: parent
 
             clip: true
-
             popEnter: Transition {
                 OpacityAnimator {
                     from: 0.0
@@ -240,68 +241,18 @@ SplitView {
         }
     }
 
-    // playlist right sidebar
-    // Changing the playlist's width causes many Loaders to activate/deactivate, which results in
-    // a choppy animation when hiding the playlist. When hiding the playlist, we fix the PlayList
-    // width and change the parent Item's width instead. This gives the appearance of the PlayList
-    // sliding off the screen without the performance issues caused by Loaders.
-    Item {
-        id: playListContainer
-
-        /**
-        * Cached width of the playlist when the playlist is hidden
-        *
-        * This does not get updated when the playlist is resized whilst visible
-        */
-        property real hiddenCachedWidth: 0
-
-        /**
-         * The current preferred width of the playlist, whether the playlist is visible or not
-         */
-        property real preferredWidth: hiddenCachedWidth
-
-        // Default values for when the playlist is not visible
-        SplitView.minimumWidth: 0
-        SplitView.preferredWidth: 0
-
-        visible: SplitView.preferredWidth !== 0 // Only hide the playlist *after* the width transition
-        enabled: visible // Avoid taking keyboard focus when not visible
-
-        MediaPlayListView {
-            id: playList
-            width: playListContainer.hiddenCachedWidth
-            height: playListContainer.height
-        }
-
-        // We use a state here so that the width only animates during
-        // the transition, not when using the drag handle.
-        states: [
-            State {
-                name: "playlistVisible"
-                when: mainWindow.isWideScreen && contentViewContainer.showPlaylist
-                PropertyChanges {
-                    playListContainer.visible: true
-                    playListContainer.SplitView.minimumWidth: 10 * Kirigami.Units.gridUnit
-                    playListContainer.SplitView.preferredWidth: playListContainer.hiddenCachedWidth
-                    playListContainer.preferredWidth: playListContainer.SplitView.preferredWidth
-                    playList.width: playListContainer.width
-                }
-            }
-        ]
-
-        transitions: Transition {
-            ScriptAction {
-                script: {
-                    if (playListContainer.state === "") {
-                        playListContainer.hiddenCachedWidth = playListContainer.SplitView.preferredWidth;
-                    }
-                }
-            }
-            NumberAnimation {
-                property: "SplitView.preferredWidth"
-                easing.type: Easing.InOutQuad
-                duration: Kirigami.Units.longDuration
-            }
+    // right-side "Now Playing" panel (Spotify's now-playing view)
+    Loader {
+        id: nowPlayingPanelLoader
+        active: !Kirigami.Settings.isMobile && mainWindow.isWideScreen && contentViewContainer.showNowPlayingPanel
+        visible: active && status === Loader.Ready
+        SplitView.preferredWidth: active ? Theme.nowPlayingPanelWidth : 0
+        SplitView.minimumWidth: active ? Theme.nowPlayingPanelMinWidth : 0
+        SplitView.maximumWidth: Theme.nowPlayingPanelMaxWidth
+        sourceComponent: NowPlayingPanel {
+            onOpenArtist: contentViewContainer.openArtist(artist)
+            onOpenAlbum: contentViewContainer.openAlbum(album, ElisaApplication.manageHeaderBar.albumArtist, image, ElisaApplication.manageHeaderBar.albumId)
+            onOpenNowPlaying: contentViewContainer.openNowPlaying()
         }
     }
 

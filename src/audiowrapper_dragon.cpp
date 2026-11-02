@@ -97,7 +97,10 @@ AudioWrapper::AudioWrapper(QObject *parent)
     : QObject(parent)
     , d(std::make_unique<AudioWrapperPrivate>())
 {
-    QLoggingCategory::setFilterRules(QStringLiteral("org.kde.dragonmediabackend.*.debug=true"));
+    // Always enable the backend's own tracing, but keep any rules supplied by
+    // the environment (QT_LOGGING_RULES) so the rest of the application can be
+    // debugged without this call overriding them.
+    QLoggingCategory::setFilterRules(QStringLiteral("org.kde.dragonmediabackend.*.debug=true\n") + qEnvironmentVariable("QT_LOGGING_RULES"));
     connect(&d->mPlayer, &DragonPlayer::stateChanged, this, [this](DragonPlayer::PlaybackState, DragonPlayer::PlaybackState) {
         queueStatusChanged();
     });
@@ -193,6 +196,16 @@ void AudioWrapper::setVolume(qreal volume)
 void AudioWrapper::setSource(const QUrl &source)
 {
     qCDebug(orgKdeElisaPlayerDragon) << "AudioWrapper::setSource" << source;
+
+    // A track that ends naturally leaves the backend stopped (EndOfMedia) while its
+    // audio sink is still open. Switching to the next source without tearing that
+    // pipeline down keeps the stale sink: the next play() then reports PlayingState
+    // but the device never advances, so the new track never becomes audible. Tear the
+    // ended media down first so the new source gets a freshly opened sink.
+    if (d->mPlayer.status() == DragonPlayer::MediaStatus::EndOfMedia) {
+        qCDebug(orgKdeElisaPlayerDragon) << "AudioWrapper::setSource tearing down ended media before switching source";
+        d->mPlayer.stop();
+    }
 
     d->mPlayer.setSource(source);
     d->mSavedPosition.reset();

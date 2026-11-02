@@ -283,9 +283,9 @@ set_target_properties(elisaLib PROPERTIES
 
 if (NOT APPLE AND NOT WIN32)
     install(TARGETS elisaLib
-        LIBRARY DESTINATION ${KDE_INSTALL_FULL_LIBDIR}/elisa NAMELINK_SKIP
-        RUNTIME DESTINATION ${KDE_INSTALL_FULL_LIBDIR}/elisa
-        BUNDLE DESTINATION ${KDE_INSTALL_FULL_LIBDIR}/elisa
+        LIBRARY DESTINATION ${KDE_INSTALL_FULL_LIBDIR}/spot-lisa NAMELINK_SKIP
+        RUNTIME DESTINATION ${KDE_INSTALL_FULL_LIBDIR}/spot-lisa
+        BUNDLE DESTINATION ${KDE_INSTALL_FULL_LIBDIR}/spot-lisa
         )
 else()
     install(TARGETS elisaLib ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
@@ -344,12 +344,16 @@ qt_add_qml_module(elisaLib
         qml/NativeMenuItemFromAction.qml
         qml/NativeTrayMenu.qml
         qml/NavigationActionBar.qml
+        qml/NowPlayingPanel.qml
+        qml/NowPlayingView.qml
         qml/PlatformIntegration.qml
         qml/PlayListEntry.qml
+        qml/PlayerBar.qml
         qml/PlaylistModeItem.qml
         qml/RatingStar.qml
         qml/SettingsForm.qml
         qml/ShuffleModeItem.qml
+        qml/Sidebar.qml
         qml/SimplePlayListView.qml
         qml/SortMenu.qml
         qml/TrackBrowserDelegate.qml
@@ -382,20 +386,20 @@ if (Qt6Quick_FOUND AND Qt6Widgets_FOUND)
     )
 
     set(elisa_ICONS_PNG
-        ../icons/128-apps-elisa.png
-        ../icons/64-apps-elisa.png
-        ../icons/48-apps-elisa.png
-        ../icons/32-apps-elisa.png
-        ../icons/22-apps-elisa.png
-        ../icons/16-apps-elisa.png
+        ../icons/128-apps-spotlisa.png
+        ../icons/64-apps-spotlisa.png
+        ../icons/48-apps-spotlisa.png
+        ../icons/32-apps-spotlisa.png
+        ../icons/22-apps-spotlisa.png
+        ../icons/16-apps-spotlisa.png
         )
 
     # add icons to application sources, to have them bundled
     ecm_add_app_icon(elisa_SOURCES ICONS ${elisa_ICONS_PNG})
 
-    add_executable(elisa ${elisa_SOURCES})
+    add_executable(spot-lisa ${elisa_SOURCES})
 
-    target_link_libraries(elisa
+    target_link_libraries(spot-lisa
         LINK_PRIVATE
         elisaLib
         Qt::Widgets Qt::QuickControls2
@@ -405,26 +409,26 @@ if (Qt6Quick_FOUND AND Qt6Widgets_FOUND)
         )
 
     if (ANDROID)
-        target_link_libraries(elisa
+        target_link_libraries(spot-lisa
             PRIVATE
             Qt::Svg Qt::Sql Qt::Concurrent KF6::Kirigami Qt6::CorePrivate
         )
     endif()
 
     if (KF6Crash_FOUND)
-        target_link_libraries(elisa
+        target_link_libraries(spot-lisa
             LINK_PRIVATE
             KF6::Crash
             )
     endif()
 
     if (NOT APPLE AND NOT WIN32)
-        set_target_properties(elisa PROPERTIES
-            INSTALL_RPATH "${KDE_INSTALL_FULL_LIBDIR}/elisa;${CMAKE_INSTALL_RPATH}"
+        set_target_properties(spot-lisa PROPERTIES
+            INSTALL_RPATH "${KDE_INSTALL_FULL_LIBDIR}/spot-lisa;${CMAKE_INSTALL_RPATH}"
             )
     endif()
 
-    install(TARGETS elisa ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+    install(TARGETS spot-lisa ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 endif()
 
 set(elisaImport_SOURCES
@@ -451,7 +455,7 @@ set(QML_IMPORT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "qml import path" FOR
 
 if (ANDROID)
     kirigami_package_breeze_icons(ICONS
-        elisa
+        spotlisa
         open-menu-symbolic
         system-search
         overflow-menu
@@ -513,7 +517,7 @@ if (ANDROID)
         settings-configure
         view-sort
     )
-    ecm_add_android_apk(elisa ANDROID_DIR ${CMAKE_SOURCE_DIR}/android)
+    ecm_add_android_apk(spot-lisa ANDROID_DIR ${CMAKE_SOURCE_DIR}/android)
 endif()
 
 install(FILES elisa_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})

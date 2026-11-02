@@ -1483,7 +1483,7 @@ private Q_SLOTS:
         QCOMPARE(secondTrackAlbumArtist, QStringLiteral("Various Artists"));
         QCOMPARE(secondTrackAlbum, QStringLiteral("album1"));
         QCOMPARE(seconfTrackImage.isValid(), true);
-        QCOMPARE(seconfTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+        QCOMPARE(seconfTrackImage, QUrl(QStringLiteral("image://cover//$2")));
         QCOMPARE(secondTrackDuration, QTime::fromMSecsSinceStartOfDay(2));
         QCOMPARE(secondTrackMilliSecondsDuration, 2);
         QCOMPARE(secondTrackTrackNumber, 2);
@@ -1516,7 +1516,7 @@ private Q_SLOTS:
         QCOMPARE(thirdTrackAlbumArtist, QStringLiteral("Various Artists"));
         QCOMPARE(thirdTrackAlbum, QStringLiteral("album1"));
         QCOMPARE(thirdTrackImage.isValid(), true);
-        QCOMPARE(thirdTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+        QCOMPARE(thirdTrackImage, QUrl(QStringLiteral("image://cover//$3")));
         QCOMPARE(thirdTrackDuration, QTime::fromMSecsSinceStartOfDay(3));
         QCOMPARE(thirdTrackMilliSecondsDuration, 3);
         QCOMPARE(thirdTrackTrackNumber, 3);
@@ -1549,7 +1549,7 @@ private Q_SLOTS:
         QCOMPARE(fourthTrackAlbumArtist, QStringLiteral("Various Artists"));
         QCOMPARE(fourthTrackAlbum, QStringLiteral("album1"));
         QCOMPARE(fourthTrackImage.isValid(), true);
-        QCOMPARE(fourthTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+        QCOMPARE(fourthTrackImage, QUrl(QStringLiteral("image://cover//$4")));
         QCOMPARE(fourthTrackDuration, QTime::fromMSecsSinceStartOfDay(4));
         QCOMPARE(fourthTrackMilliSecondsDuration, 4);
         QCOMPARE(fourthTrackTrackNumber, 4);
@@ -1683,7 +1683,7 @@ private Q_SLOTS:
             QCOMPARE(secondTrackAlbumArtist, QStringLiteral("Various Artists"));
             QCOMPARE(secondTrackAlbum, QStringLiteral("album1"));
             QCOMPARE(seconfTrackImage.isValid(), true);
-            QCOMPARE(seconfTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+            QCOMPARE(seconfTrackImage, QUrl(QStringLiteral("image://cover//$2")));
             QCOMPARE(secondTrackDuration, QTime::fromMSecsSinceStartOfDay(2));
             QCOMPARE(secondTrackMilliSecondsDuration, 2);
             QCOMPARE(secondTrackTrackNumber, 2);
@@ -1716,7 +1716,7 @@ private Q_SLOTS:
             QCOMPARE(thirdTrackAlbumArtist, QStringLiteral("Various Artists"));
             QCOMPARE(thirdTrackAlbum, QStringLiteral("album1"));
             QCOMPARE(thirdTrackImage.isValid(), true);
-            QCOMPARE(thirdTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+            QCOMPARE(thirdTrackImage, QUrl(QStringLiteral("image://cover//$3")));
             QCOMPARE(thirdTrackDuration, QTime::fromMSecsSinceStartOfDay(3));
             QCOMPARE(thirdTrackMilliSecondsDuration, 3);
             QCOMPARE(thirdTrackTrackNumber, 3);
@@ -1749,7 +1749,7 @@ private Q_SLOTS:
             QCOMPARE(fourthTrackAlbumArtist, QStringLiteral("Various Artists"));
             QCOMPARE(fourthTrackAlbum, QStringLiteral("album1"));
             QCOMPARE(fourthTrackImage.isValid(), true);
-            QCOMPARE(fourthTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+            QCOMPARE(fourthTrackImage, QUrl(QStringLiteral("image://cover//$4")));
             QCOMPARE(fourthTrackDuration, QTime::fromMSecsSinceStartOfDay(4));
             QCOMPARE(fourthTrackMilliSecondsDuration, 4);
             QCOMPARE(fourthTrackTrackNumber, 4);
@@ -1882,7 +1882,7 @@ private Q_SLOTS:
             QCOMPARE(secondTrackAlbumArtist, QStringLiteral("Various Artists"));
             QCOMPARE(secondTrackAlbum, QStringLiteral("album1"));
             QCOMPARE(seconfTrackImage.isValid(), true);
-            QCOMPARE(seconfTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+            QCOMPARE(seconfTrackImage, QUrl(QStringLiteral("image://cover//$2")));
             QCOMPARE(secondTrackDuration, QTime::fromMSecsSinceStartOfDay(2));
             QCOMPARE(secondTrackMilliSecondsDuration, 2);
             QCOMPARE(secondTrackTrackNumber, 2);
@@ -1915,7 +1915,7 @@ private Q_SLOTS:
             QCOMPARE(thirdTrackAlbumArtist, QStringLiteral("Various Artists"));
             QCOMPARE(thirdTrackAlbum, QStringLiteral("album1"));
             QCOMPARE(thirdTrackImage.isValid(), true);
-            QCOMPARE(thirdTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+            QCOMPARE(thirdTrackImage, QUrl(QStringLiteral("image://cover//$3")));
             QCOMPARE(thirdTrackDuration, QTime::fromMSecsSinceStartOfDay(3));
             QCOMPARE(thirdTrackMilliSecondsDuration, 3);
             QCOMPARE(thirdTrackTrackNumber, 3);
@@ -1948,7 +1948,7 @@ private Q_SLOTS:
             QCOMPARE(fourthTrackAlbumArtist, QStringLiteral("Various Artists"));
             QCOMPARE(fourthTrackAlbum, QStringLiteral("album1"));
             QCOMPARE(fourthTrackImage.isValid(), true);
-            QCOMPARE(fourthTrackImage, QUrl(QStringLiteral("image://cover//$1")));
+            QCOMPARE(fourthTrackImage, QUrl(QStringLiteral("image://cover//$4")));
             QCOMPARE(fourthTrackDuration, QTime::fromMSecsSinceStartOfDay(4));
             QCOMPARE(fourthTrackMilliSecondsDuration, 4);
             QCOMPARE(fourthTrackTrackNumber, 4);

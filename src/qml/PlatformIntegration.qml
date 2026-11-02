@@ -55,7 +55,7 @@ Item {
     Mpris2 {
         id: mpris2Interface
 
-        playerName: 'elisa'
+        playerName: 'spotlisa'
 
         onRaisePlayer: root.raisePlayer()
     }

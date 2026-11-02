@@ -15,6 +15,26 @@ import org.kde.kirigami as Kirigami
 Item {
     id: root
 
+    // Spotify-inspired color palette. The application forces a dark color
+    // scheme at startup (see main.cpp), so these are safe to use directly.
+    readonly property color spotifyBase: '#121212'
+    readonly property color spotifyBlack: '#000000'
+    readonly property color spotifySurface: '#181818'
+    readonly property color spotifySurfaceElevated: '#242424'
+    readonly property color spotifyHighlightElevated: '#2a2a2a'
+    readonly property color spotifyAccent: '#1DB954'
+    readonly property color spotifyAccentHover: '#1ed760'
+    readonly property color spotifyTextPrimary: '#FFFFFF'
+    readonly property color spotifyTextSecondary: '#B3B3B3'
+    readonly property color spotifyRowHover: '#242424'
+    readonly property color spotifyDivider: '#282828'
+    // Overlay used by Spotify for hover states on top of arbitrary colors
+    readonly property color spotifyOverlay: '#ffffff1a'
+
+    readonly property int spotifyRadiusSmall: 4
+    readonly property int spotifyRadius: 8
+    readonly property int spotifyRadiusLarge: 12
+
     readonly property string defaultAlbumImage: 'media-default-album'
     readonly property string defaultBackgroundImage: 'qrc:/qt/qml/org/kde/elisa/background.png'
 
@@ -22,6 +42,11 @@ Item {
     readonly property string trackIcon: 'image://icon/view-media-track'
 
     readonly property int coverImageSize: Kirigami.Units.gridUnit * 10
+
+    // right-side "Now Playing" panel sizes
+    readonly property int nowPlayingPanelWidth: Kirigami.Units.gridUnit * 20
+    readonly property int nowPlayingPanelMinWidth: Kirigami.Units.gridUnit * 16
+    readonly property int nowPlayingPanelMaxWidth: Kirigami.Units.gridUnit * 28
 
     readonly property int metaDataDialogHeight: Kirigami.Units.gridUnit * 27
     readonly property int metaDataDialogWidth: Kirigami.Units.gridUnit * 33

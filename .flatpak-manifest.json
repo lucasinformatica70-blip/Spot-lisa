@@ -1,19 +1,18 @@
 {
-    "id": "org.kde.elisa",
+    "id": "org.kde.spotlisa",
     "branch": "master",
     "runtime": "org.kde.Platform",
     "runtime-version": "6.11",
     "sdk": "org.kde.Sdk",
-    "command": "elisa",
-    "rename-icon": "elisa",
+    "command": "spot-lisa",
+    "rename-icon": "spotlisa",
     "tags": [
         "nightly"
     ],
-    "desktop-file-name-suffix": " (Nightly)",
     "finish-args": [
         "--device=dri",
         "--filesystem=xdg-music",
-        "--own-name=org.mpris.MediaPlayer2.elisa",
+        "--own-name=org.mpris.MediaPlayer2.spotlisa",
         "--share=ipc",
         "--share=network",
         "--socket=fallback-x11",
@@ -82,7 +81,7 @@
             ]
         },
         {
-            "name": "elisa",
+            "name": "spot-lisa",
             "buildsystem": "cmake-ninja",
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=RelWithDebInfo"

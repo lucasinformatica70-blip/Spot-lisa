@@ -5,16 +5,37 @@ SPDX-FileCopyrightText: 2023 Nate Graham <nate@kde.org>
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# Elisa
-
-<a href='https://flathub.org/apps/details/org.kde.elisa'><img width='190px' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-i-en.png'/></a>
-
-![Screenshot Elisa albums view](https://cdn.kde.org/screenshots/elisa/elisa.png)
+# Spot-lisa
 
 ## Introduction
 
-Elisa is a simple music player aiming to provide a nice experience for its users.
-User-facing information about the app can be found at https://apps.kde.org/elisa/.
+Spot-lisa is a friendly fork of [Elisa](https://apps.kde.org/elisa/) that reimagines the KDE music player with a Spotify-inspired look and feel: a persistent bottom player bar, a left sidebar that merges navigation with your library, and a forced dark theme.
+
+Spot-lisa remains a simple local music player, and all credit for the original Elisa application belongs to its contributors.
+
+## Installing
+
+Spot-lisa is deliberately installable **next to Elisa**: nothing has to be uninstalled, and both players can even run at the same time. Every install-facing identity is its own — executable `spot-lisa`, desktop file and appstream ID `org.kde.spotlisa.desktop`, D-Bus service `org.kde.spotlisa`, MPRIS name `org.mpris.MediaPlayer2.spotlisa`, icons `spotlisa.*`, translation catalog `spotlisa.mo`, config file `~/.config/spotlisarc` and music database `~/.local/share/spotlisa/spotlisaDatabase.db`. Elisa's files are never touched.
+
+### Flatpak
+
+```sh
+flatpak install --user flathub org.kde.Platform//6.11 org.kde.Sdk//6.11
+flatpak run org.flatpak.Builder --force-clean --user --install build-flatpak .flatpak-manifest.json
+flatpak run org.kde.spotlisa
+```
+
+The Flatpak is fully sandboxed, so it can coexist with a distribution-installed Elisa (or a Flathub Elisa) without any file ever overlapping.
+
+### Native install
+
+```sh
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+cmake --install build            # use -DCMAKE_INSTALL_PREFIX=~/.local (or /usr/local) to stay clear of the distribution's Elisa
+```
+
+Installing with the default `/usr` prefix is also conflict-free: no file path overlaps with the `elisa` distribution package (verified by staging an install and diffing it against the package's file list).
 
 ## Contributions
 

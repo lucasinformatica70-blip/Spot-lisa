@@ -29,7 +29,9 @@ QString ProgressIndicator::progressDuration() const
 
 void ProgressIndicator::setPosition(int position)
 {
-    if (mPosition == position)
+    // The initial position of 0 must still format the duration string,
+    // otherwise the elapsed-time label stays empty until playback moves.
+    if (mPosition == position && !mProgressDuration.isEmpty())
         return;
 
     mPosition = position;

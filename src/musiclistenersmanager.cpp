@@ -111,7 +111,7 @@ MusicListenersManager::MusicListenersManager(QObject *parent)
     if (!localDataPaths.isEmpty()) {
         QDir myDataDirectory;
         myDataDirectory.mkpath(localDataPaths.first());
-        databaseFileName = localDataPaths.first() + QStringLiteral("/elisaDatabase.db");
+        databaseFileName = localDataPaths.first() + QStringLiteral("/spotlisaDatabase.db");
     }
 
     QMetaObject::invokeMethod(&d->mDatabaseInterface, "init", Qt::QueuedConnection,

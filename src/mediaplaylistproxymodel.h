@@ -314,6 +314,8 @@ private:
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
 
+    void doClearPlayList(bool showUndoNotification);
+
     void determineTracks();
 
     void notifyCurrentTrackRowChanged();

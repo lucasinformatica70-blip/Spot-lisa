@@ -58,33 +58,6 @@ Menu {
 
     MenuSeparator {}
 
-    Menu {
-        title: KI18n.i18nc("@action:inmenu this has child menu items", "Color Scheme")
-        Repeater {
-            model: ElisaApplication.colorSchemesModel
-            delegate: MenuItem {
-                required property var model
-
-                icon.source: "image://colorScheme/" + model.display
-                icon.color: "transparent"
-                text: model.display
-                checkable: true
-                checked: {
-                    if (model.index === 0) {
-                        return ElisaApplication.activeColorSchemeName === "";
-                    }
-
-                    return model.display === ElisaApplication.activeColorSchemeName;
-                }
-                autoExclusive: true
-                onTriggered: {
-                    ElisaApplication.activeColorSchemeName = model.display
-                    applicationMenu.close()
-                }
-            }
-        }
-    }
-
     Kirigami.Action {
         fromQAction: ElisaApplication.action("options_configure")
     }

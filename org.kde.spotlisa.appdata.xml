@@ -5,67 +5,15 @@ SPDX-FileCopyrightText: 2016 Matthieu Gallien <matthieu_gallien@yahoo.fr>
 SPDX-License-Identifier: CC0-1.0
 -->
 <component type="desktop">
-  <id>org.kde.elisa.desktop</id>
+  <id>org.kde.spotlisa.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LGPL-3.0</project_license>
   <developer id="org.kde">
     <name translate="no">KDE</name>
     <url>https://kde.org</url>
   </developer>
-  <name>Elisa</name>
-  <name xml:lang="ar">إليسّا</name>
-  <name xml:lang="ast">Elisa</name>
-  <name xml:lang="az">Elisa</name>
-  <name xml:lang="be">Elisa</name>
-  <name xml:lang="bg">Elisa</name>
-  <name xml:lang="ca">Elisa</name>
-  <name xml:lang="ca-valencia">Elisa</name>
-  <name xml:lang="cs">Elisa</name>
-  <name xml:lang="da">Elisa</name>
-  <name xml:lang="de">Elisa</name>
-  <name xml:lang="el">Elisa</name>
-  <name xml:lang="en-GB">Elisa</name>
-  <name xml:lang="eo">Elisa</name>
-  <name xml:lang="es">Elisa</name>
-  <name xml:lang="et">Elisa</name>
-  <name xml:lang="eu">Elisa</name>
-  <name xml:lang="fi">Elisa</name>
-  <name xml:lang="fr">Elisa</name>
-  <name xml:lang="gl">Elisa</name>
-  <name xml:lang="he">אליסה</name>
-  <name xml:lang="hi">एलिसा</name>
-  <name xml:lang="hr">Elisa</name>
-  <name xml:lang="hu">Elisa</name>
-  <name xml:lang="ia">Elisa</name>
-  <name xml:lang="id">Elisa</name>
-  <name xml:lang="is">Elisa</name>
-  <name xml:lang="it">Elisa</name>
-  <name xml:lang="ja">Elisa</name>
-  <name xml:lang="ka">Elisa</name>
-  <name xml:lang="ko">Elisa</name>
-  <name xml:lang="lt">Elisa</name>
-  <name xml:lang="lv">Elisa</name>
-  <name xml:lang="nan-Latn-TW">Elisa</name>
-  <name xml:lang="nl">Elisa</name>
-  <name xml:lang="nn">Elisa</name>
-  <name xml:lang="pa">ਇਲੀਸਾ</name>
-  <name xml:lang="pl">Elisa</name>
-  <name xml:lang="pt">Elisa</name>
-  <name xml:lang="pt-BR">Elisa</name>
-  <name xml:lang="ro">Elisa</name>
-  <name xml:lang="ru">Elisa</name>
-  <name xml:lang="sa">एलिसा</name>
-  <name xml:lang="sk">Elisa</name>
-  <name xml:lang="sl">Elisa</name>
-  <name xml:lang="sv">Elisa</name>
-  <name xml:lang="ta">எலைசா</name>
-  <name xml:lang="th">Elisa</name>
-  <name xml:lang="tr">Elisa</name>
-  <name xml:lang="ug">Elisa نەغمە ياڭراتقۇچ</name>
-  <name xml:lang="uk">Elisa</name>
-  <name xml:lang="zh-CN">Elisa 音乐播放器</name>
-  <name xml:lang="zh-TW">Elisa</name>
-  <summary>Play local music and listen to online radio</summary>
+  <name>Spot-lisa</name>
+  <summary>Play local music with a Spotify-style interface</summary>
   <summary xml:lang="ar">شغل الصوتيات المحلية واستمع لمحطات الإذاعة على الإنترنت</summary>
   <summary xml:lang="bg">Възпроизвеждане на локални музикални файлове и слушане на онлайн радиостанции</summary>
   <summary xml:lang="ca">Reproduïu música local i escolteu ràdio en línia</summary>
@@ -408,9 +356,9 @@ SPDX-License-Identifier: CC0-1.0
     </screenshot>
   </screenshots>
   <provides>
-    <binary>elisa</binary>
+    <binary>spot-lisa</binary>
   </provides>
-  <launchable type="desktop-id">org.kde.elisa.desktop</launchable>
+  <launchable type="desktop-id">org.kde.spotlisa.desktop</launchable>
   <project_group>KDE</project_group>
   <content_rating type="oars-1.0"/>
   <branding>

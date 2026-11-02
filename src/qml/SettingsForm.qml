@@ -179,36 +179,6 @@ ColumnLayout {
             visible: Kirigami.Settings.isMobile
         }
 
-        // select colour scheme (mobile only, since desktop has it in the application menu)
-        QQC2.ComboBox {
-            Kirigami.FormData.label: KI18n.i18nc("@label:listbox", "Color scheme:")
-
-            visible: Kirigami.Settings.isMobile
-
-            model: ElisaApplication.colorSchemesModel
-            textRole: "display"
-
-            delegate: QQC2.ItemDelegate {
-                width: parent.width
-
-                required property var model
-
-                icon.source: "image://colorScheme/" + model.display
-                icon.color: "transparent"
-                text: model.display
-                checked: {
-                    if (model.index === 0) {
-                        return ElisaApplication.activeColorSchemeName === "";
-                    }
-
-                    return model.display === ElisaApplication.activeColorSchemeName;
-                }
-                onClicked: {
-                    ElisaApplication.activeColorSchemeName = model.display
-                }
-            }
-        }
-
         Item {
             Kirigami.FormData.isSection: true
             visible: Kirigami.Settings.isMobile

@@ -61,9 +61,9 @@ MenuBar {
         title: KI18n.i18nc("@title:menu", "View")
 
         MenuItem {
-            text: KI18n.i18nc("@action:inmenu", "Toggle Party Mode")
-            icon.name: mediaPlayerControl && mediaPlayerControl.isMaximized ? "arrow-up" : "expand"
-            onTriggered: mediaPlayerControl.isMaximized = !mediaPlayerControl.isMaximized
+            text: KI18n.i18nc("@action:inmenu", "Toggle Now Playing")
+            icon.name: mainWindow.inPartyMode ? "arrow-up" : "expand"
+            onTriggered: mainWindow.toggleNowPlaying()
         }
 
         MenuItem {

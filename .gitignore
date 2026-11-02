@@ -35,3 +35,9 @@ CMakeLists.txt.user*
 /cmake-build*
 .kateproject.build
 /CMakeUserPresets.json
+
+# flatpak-builder state directory
+/.flatpak-builder/
+
+# flatpak release bundle
+*.flatpak

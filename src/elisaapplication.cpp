@@ -93,7 +93,7 @@ public:
 ElisaApplication::ElisaApplication(QObject *parent) : QObject(parent), d(std::make_unique<ElisaApplicationPrivate>(this))
 {
     auto configurationFileName = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-    configurationFileName += QStringLiteral("/elisarc");
+    configurationFileName += QStringLiteral("/spotlisarc");
     d->mSchemes = KColorSchemeManager::instance();
 
     d->mConfigFileWatcher.addPath(configurationFileName);

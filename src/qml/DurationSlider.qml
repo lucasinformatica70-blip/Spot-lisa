@@ -119,6 +119,34 @@ GridLayout {
 
         // area where the slider can receive input events
         interactionHeight: root.interactionHeight
+
+        // Spotify-style seek bar: thin dark groove, green played portion
+        background: Rectangle {
+            x: slider.leftPadding
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
+            width: slider.availableWidth
+            height: slider.pressed || slider.hovered ? 6 : 4
+            radius: height / 2
+            color: Theme.spotifySurfaceElevated
+            Behavior on height { NumberAnimation { duration: 100 } }
+
+            Rectangle {
+                width: slider.visualPosition * parent.width
+                height: parent.height
+                radius: parent.radius
+                color: Theme.spotifyAccent
+            }
+        }
+
+        handle: Rectangle {
+            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
+            width: slider.pressed || slider.hovered ? 14 : 0
+            height: width
+            radius: width / 2
+            color: Theme.spotifyTextPrimary
+            Behavior on width { NumberAnimation { duration: 100 } }
+        }
     }
 
     LabelWithToolTip {

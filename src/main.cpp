@@ -27,6 +27,7 @@
 #include <KLocalizedString>
 
 #include <KAboutData>
+#include <KColorSchemeManager>
 #include <KIconTheme>
 #include <KirigamiAddons/App/KirigamiAppDefaults>
 
@@ -37,12 +38,15 @@
 #include <KQuickIconProvider>
 #include <QIcon>
 
-#include <QQmlContext>
 #include <QApplication>
+#include <QColor>
 #include <QCommandLineParser>
+#include <QDir>
+#include <QModelIndex>
+#include <QPalette>
+#include <QQmlContext>
 #include <QStandardPaths>
 #include <QSurfaceFormat>
-#include <QDir>
 
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
@@ -90,16 +94,81 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    KLocalizedString::setApplicationDomain(QByteArrayLiteral("elisa"));
+    // Spot-lisa always presents Spotify's dark look, regardless of the
+    // system color scheme. Install a Spotify-tinted dark palette so that
+    // both Qt Quick Controls and Kirigami (which derives its semantic
+    // colors from the application palette) render the dark theme.
+    {
+        const QColor base{QStringLiteral("#121212")};
+        const QColor surface{QStringLiteral("#181818")};
+        const QColor elevated{QStringLiteral("#242424")};
+        const QColor textPrimary{QStringLiteral("#FFFFFF")};
+        const QColor textSecondary{QStringLiteral("#B3B3B3")};
+        const QColor accent{QStringLiteral("#1DB954")};
 
-    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("elisa")));
+        QPalette palette;
+        palette.setColor(QPalette::Window, base);
+        palette.setColor(QPalette::WindowText, textPrimary);
+        palette.setColor(QPalette::Base, base);
+        palette.setColor(QPalette::AlternateBase, surface);
+        palette.setColor(QPalette::ToolTipBase, elevated);
+        palette.setColor(QPalette::ToolTipText, textPrimary);
+        palette.setColor(QPalette::PlaceholderText, textSecondary);
+        palette.setColor(QPalette::Text, textPrimary);
+        palette.setColor(QPalette::Button, surface);
+        palette.setColor(QPalette::ButtonText, textPrimary);
+        palette.setColor(QPalette::BrightText, accent);
+        palette.setColor(QPalette::Link, accent);
+        palette.setColor(QPalette::LinkVisited, accent);
+        palette.setColor(QPalette::Highlight, accent);
+        palette.setColor(QPalette::HighlightedText, QStringLiteral("#000000"));
+        palette.setColor(QPalette::Light, elevated);
+        palette.setColor(QPalette::Midlight, surface);
+        palette.setColor(QPalette::Mid, elevated);
+        palette.setColor(QPalette::Dark, base);
+        palette.setColor(QPalette::Shadow, QStringLiteral("#000000"));
+        for (const auto group : {QPalette::Active, QPalette::Inactive, QPalette::Disabled}) {
+            palette.setColor(group, QPalette::Window, base);
+            palette.setColor(group, QPalette::WindowText, group == QPalette::Disabled ? textSecondary : textPrimary);
+            palette.setColor(group, QPalette::Base, base);
+            palette.setColor(group, QPalette::AlternateBase, surface);
+            palette.setColor(group, QPalette::Text, group == QPalette::Disabled ? textSecondary : textPrimary);
+            palette.setColor(group, QPalette::Button, surface);
+            palette.setColor(group, QPalette::ButtonText, group == QPalette::Disabled ? textSecondary : textPrimary);
+            palette.setColor(group, QPalette::Highlight, accent);
+            palette.setColor(group, QPalette::HighlightedText, QStringLiteral("#000000"));
+        }
+        app.setPalette(palette);
 
-    KAboutData aboutData( QStringLiteral("elisa"),
-                          i18nc("@title", "Elisa"),
-                          QStringLiteral(ELISA_VERSION_STRING),
-                          i18nc("@info", "A Simple Music Player made with love by the KDE community"),
-                          KAboutLicense::LGPL_V3,
-                          i18nc("@info", "© 2015–2026, Elisa contributors"));
+        // Force a dark base scheme so Kirigami's semantic colors (menus,
+        // dialogs, tooltips) are guaranteed dark. The Spotify-tinted
+        // palette installed above provides the accent/text tint on top.
+        // If the scheme isn't available, activateScheme is a no-op and the
+        // palette above still applies.
+        const QModelIndex darkIndex = KColorSchemeManager::instance()->indexForScheme(QStringLiteral("Breeze Dark"));
+        if (darkIndex.isValid()) {
+            KColorSchemeManager::instance()->activateScheme(darkIndex);
+            app.setPalette(palette);
+        }
+    }
+
+    // Translation catalog: the po/ files are installed as spotlisa.mo, a
+    // domain distinct from Elisa's so both packages can be installed at once.
+    KLocalizedString::setApplicationDomain(QByteArrayLiteral("spotlisa"));
+
+    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("spotlisa")));
+
+    // KAboutData's component name drives QCoreApplication::applicationName,
+    // the organization domain (kde.org), the desktop file name
+    // (org.kde.spotlisa) and the D-Bus service name used for single-instance
+    // activation (org.kde.spotlisa). All of them must stay distinct from
+    // Elisa's so both applications can be installed side by side.
+    KAboutData aboutData(QStringLiteral("spotlisa"),
+                         i18nc("@title", "Spot-lisa"),
+                         QStringLiteral(ELISA_VERSION_STRING),
+                         i18nc("@info", "A Spotify-style music player, a friendly fork of Elisa by the KDE community"),
+                         KAboutLicense::LGPL_V3,
+                         i18nc("@info", "© 2015–2026, Elisa contributors"));
 
     aboutData.addAuthor(QStringLiteral("Matthieu Gallien"),i18nc("@label", "Creator"), QStringLiteral("mgallien@mgallien.fr"));
     aboutData.addAuthor(QStringLiteral("Nate Graham"), i18nc("@label", "Author"), QStringLiteral("nate@kde.org"));

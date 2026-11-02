@@ -210,8 +210,8 @@ endif()
 
 if (KF6DBusAddons_FOUND)
     ecm_generate_dbus_service_file(
-        NAME org.kde.elisa
-        EXECUTABLE ${KDE_INSTALL_FULL_BINDIR}/elisa
+        NAME org.kde.spotlisa
+        EXECUTABLE ${KDE_INSTALL_FULL_BINDIR}/spot-lisa
         DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
     )
     set(ELISA_DBUSACTIVATABLE "DBusActivatable=true")
@@ -219,20 +219,20 @@ else()
     set(ELISA_DBUSACTIVATABLE)
 endif()
 
-configure_file(org.kde.elisa.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/org.kde.elisa.desktop @ONLY)
+configure_file(org.kde.spotlisa.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/org.kde.spotlisa.desktop @ONLY)
 install(
-    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.elisa.desktop
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.spotlisa.desktop
     DESTINATION ${KDE_INSTALL_APPDIR}
 )
 
 install(
-    FILES org.kde.elisa.appdata.xml
+    FILES org.kde.spotlisa.appdata.xml
     DESTINATION ${KDE_INSTALL_METAINFODIR}
 )
 
 ki18n_install(po)
 
-install(FILES elisa.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
+install(FILES spotlisa.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 if (ANDROID)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/android/version.gradle.in ${CMAKE_BINARY_DIR}/version.gradle)

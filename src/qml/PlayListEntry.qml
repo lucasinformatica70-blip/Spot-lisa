@@ -35,8 +35,29 @@ BasePlayListDelegate {
 
     readonly property bool hasActiveFocus: playListEntry.activeFocus || entryFocusScope.activeFocus
 
-    readonly property color textColor: highlighted || down ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
-    readonly property color iconColor: textColor
+    // Spotify-style queue row: green title when it's the current track
+    readonly property color textColor: playListEntry.isPlaying === MediaPlayList.IsPlaying
+        ? Theme.spotifyAccent
+        : Theme.spotifyTextPrimary
+    readonly property color iconColor: playListEntry.isPlaying === MediaPlayList.IsPlaying ? Theme.spotifyAccent : Theme.spotifyTextSecondary
+
+    // subtle hover background, like Spotify's queue rows
+    background: Rectangle {
+        anchors.fill: parent
+        radius: Theme.spotifyRadiusSmall
+        color: {
+            if (playListEntry.highlighted || playListEntry.down) {
+                return Theme.spotifyHighlightElevated
+            }
+            if (playListEntry.hovered || playListEntry.hasActiveFocus) {
+                return Theme.spotifyRowHover
+            }
+            return "transparent"
+        }
+        Behavior on color {
+            ColorAnimation { duration: 100 }
+        }
+    }
 
     Accessible.role: Accessible.ListItem
     Accessible.name: title + ' ' + album + ' ' + artist

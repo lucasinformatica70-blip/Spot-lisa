@@ -42,8 +42,8 @@ ItemDelegate {
 
     readonly property bool hasActiveFocus: activeFocus || focusScope.activeFocus
 
-    readonly property color textColor: highlighted || down ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
-    readonly property color iconColor: textColor
+    readonly property color textColor: highlighted || down ? Theme.spotifyTextPrimary : Theme.spotifyTextPrimary
+    readonly property color iconColor: highlighted || down ? Theme.spotifyTextPrimary : Theme.spotifyTextSecondary
 
     signal enqueue()
     signal playNext()
@@ -51,7 +51,26 @@ ItemDelegate {
     signal callOpenMetaDataView(var url, var entryType)
     signal trackRatingChanged(var url, var rating)
 
-    Kirigami.Theme.useAlternateBackgroundColor: isAlternateColor
+    Kirigami.Theme.inherit: false
+    Kirigami.Theme.colorSet: Kirigami.Theme.View
+
+    // Spotify-style row: subtle hover highlight, no zebra striping
+    background: Rectangle {
+        anchors.fill: parent
+        radius: Theme.spotifyRadiusSmall
+        color: {
+            if (mediaTrack.highlighted || mediaTrack.down) {
+                return Theme.spotifyHighlightElevated
+            }
+            if (mediaTrack.hovered || mediaTrack.hasActiveFocus) {
+                return Theme.spotifyRowHover
+            }
+            return "transparent"
+        }
+        Behavior on color {
+            ColorAnimation { duration: 100 }
+        }
+    }
 
     Accessible.role: Accessible.ListItem
     Accessible.name: title

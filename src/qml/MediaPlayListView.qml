@@ -26,12 +26,17 @@ Kirigami.Page {
     property var playListNotification
     property var playListView
 
+    // true when embedded in the left Sidebar; hides the large page header and
+    // footer so the compact "Your Library" header from the sidebar is used
+    property bool embeddedInSidebar: false
+
     title: KI18n.i18nc("@title:window Title of the view of the playlist; keep this string as short as possible because horizontal space is quite scarce", "Playlist")
     padding: 0
 
     // Use view colors so the background is white
     Kirigami.Theme.inherit: false
     Kirigami.Theme.colorSet: Kirigami.Theme.View
+    Kirigami.Theme.backgroundColor: Theme.spotifySurface
 
     Accessible.role: Accessible.Pane
     Accessible.name: topItem.title
@@ -39,6 +44,8 @@ Kirigami.Page {
     // Header with title and actions
     globalToolBarStyle: Kirigami.ApplicationHeaderStyle.None
     header: ToolBar {
+        visible: !topItem.embeddedInSidebar
+        implicitHeight: visible ? implicitContentHeight : 0
         leftPadding: mirrored ? undefined : Kirigami.Units.largeSpacing
         rightPadding: mirrored ? Kirigami.Units.largeSpacing : undefined
 
@@ -446,7 +453,8 @@ Kirigami.Page {
     }
 
     footer: ToolBar {
-        implicitHeight: Math.round(Kirigami.Units.gridUnit * 2)
+        visible: !topItem.embeddedInSidebar
+        implicitHeight: visible ? Math.round(Kirigami.Units.gridUnit * 2) : 0
 
         leftPadding: mirrored ? undefined : Kirigami.Units.largeSpacing
         rightPadding: mirrored ? Kirigami.Units.largeSpacing : undefined

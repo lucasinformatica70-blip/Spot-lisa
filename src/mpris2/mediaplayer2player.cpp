@@ -110,7 +110,7 @@ QString MediaPlayer2Player::PlaybackStatus() const
             parameters.insert(QStringLiteral("progress"), qRound(static_cast<double>(m_position / m_audioPlayer->duration())) / 1000.0);
         }
 
-        mProgressIndicatorSignal.setArguments({QStringLiteral("application://org.kde.elisa.desktop"), parameters});
+        mProgressIndicatorSignal.setArguments({QStringLiteral("application://org.kde.spotlisa.desktop"), parameters});
 
         QDBusConnection::sessionBus().send(mProgressIndicatorSignal);
     }
@@ -228,7 +228,7 @@ void MediaPlayer2Player::setPropertyPosition(int newPositionInMs)
         parameters.insert(QStringLiteral("progress-visible"), true);
         parameters.insert(QStringLiteral("progress"), static_cast<double>(newPositionInMs) / m_audioPlayer->duration());
 
-        mProgressIndicatorSignal.setArguments({QStringLiteral("application://org.kde.elisa.desktop"), parameters});
+        mProgressIndicatorSignal.setArguments({QStringLiteral("application://org.kde.spotlisa.desktop"), parameters});
 
         QDBusConnection::sessionBus().send(mProgressIndicatorSignal);
     }
@@ -477,7 +477,7 @@ void MediaPlayer2Player::setShowProgressOnTaskBar(bool value)
         parameters.insert(QStringLiteral("progress"), qRound(static_cast<double>(m_position / m_audioPlayer->duration())) / 1000.0);
     }
 
-    mProgressIndicatorSignal.setArguments({QStringLiteral("application://org.kde.elisa.desktop"), parameters});
+    mProgressIndicatorSignal.setArguments({QStringLiteral("application://org.kde.spotlisa.desktop"), parameters});
 
     QDBusConnection::sessionBus().send(mProgressIndicatorSignal);
 }
