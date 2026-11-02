@@ -14,7 +14,6 @@ MenuItem {
     property Kirigami.Action action
 
     text: action.text
-    shortcut: action.shortcut
     icon.name: action.icon.name
     onTriggered: action.trigger()
     visible: action.visible

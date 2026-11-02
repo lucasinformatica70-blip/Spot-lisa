@@ -178,6 +178,10 @@ private Q_SLOTS:
 
     void testMoveCurrentTrack();
 
+    void testRemoveCurrentTrackWithShuffle();
+
+    void testRemainingDurationWithShuffle();
+
 private:
 
     MediaPlayList *mPlayList = nullptr;

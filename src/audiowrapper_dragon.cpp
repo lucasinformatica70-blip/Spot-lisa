@@ -9,7 +9,6 @@
 #include "dragonLogging.h"
 #include "powermanagementinterface.h"
 
-#include <QLoggingCategory>
 #include <QTimer>
 
 #include <DragonAudioOutput>
@@ -93,14 +92,19 @@ static constexpr QMediaPlayer::Error mapError(DragonPlayer::Error error)
     return QMediaPlayer::NoError;
 }
 
+static constexpr auto gaplessPrefinishMark = 2000ms;
+
 AudioWrapper::AudioWrapper(QObject *parent)
     : QObject(parent)
     , d(std::make_unique<AudioWrapperPrivate>())
 {
+<<<<<<< HEAD
     // Always enable the backend's own tracing, but keep any rules supplied by
     // the environment (QT_LOGGING_RULES) so the rest of the application can be
     // debugged without this call overriding them.
     QLoggingCategory::setFilterRules(QStringLiteral("org.kde.dragonmediabackend.*.debug=true\n") + qEnvironmentVariable("QT_LOGGING_RULES"));
+=======
+>>>>>>> origin/master
     connect(&d->mPlayer, &DragonPlayer::stateChanged, this, [this](DragonPlayer::PlaybackState, DragonPlayer::PlaybackState) {
         queueStatusChanged();
     });
@@ -118,6 +122,12 @@ AudioWrapper::AudioWrapper(QObject *parent)
     });
     connect(&d->mPlayer, &DragonPlayer::seekableChanged, this, &AudioWrapper::seekableChanged);
     connect(&d->mPlayer, &DragonPlayer::sourceChanged, this, &AudioWrapper::sourceChanged);
+    connect(&d->mPlayer, &DragonPlayer::nextSourceChanged, this, &AudioWrapper::nextSourceChanged);
+    connect(&d->mPlayer, &DragonPlayer::aboutToFinish, this, &AudioWrapper::aboutToFinish);
+    connect(&d->mPlayer, &DragonPlayer::trackChanged, this, [this]() {
+        Q_EMIT trackChanged(d->mPlayer.source());
+    });
+    d->mPlayer.setPrefinishMark(gaplessPrefinishMark);
     connect(d->mPlayer.audioOutput(), &DragonAudioOutput::volumeChanged, this, &AudioWrapper::playerVolumeChanged);
     connect(d->mPlayer.audioOutput(), &DragonAudioOutput::mutedChanged, this, &AudioWrapper::playerMutedChanged);
     connect(&d->mPlayer, &DragonPlayer::currentPlayingForRadiosChanged, this, [this](const DragonIcyMetadata &metadata) {
@@ -144,6 +154,11 @@ qreal AudioWrapper::volume() const
 QUrl AudioWrapper::source() const
 {
     return d->mPlayer.source();
+}
+
+QUrl AudioWrapper::nextSource() const
+{
+    return d->mPlayer.nextSource();
 }
 
 QMediaPlayer::MediaStatus AudioWrapper::status() const
@@ -209,6 +224,13 @@ void AudioWrapper::setSource(const QUrl &source)
 
     d->mPlayer.setSource(source);
     d->mSavedPosition.reset();
+}
+
+void AudioWrapper::setNextSource(const QUrl &source)
+{
+    qCDebug(orgKdeElisaPlayerDragon) << "AudioWrapper::setNextSource" << source;
+
+    d->mPlayer.setNextSource(source);
 }
 
 void AudioWrapper::setPosition(qint64 position)

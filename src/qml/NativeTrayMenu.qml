@@ -33,41 +33,29 @@ Menu {
     }
 
     NativeMenuItemFromAction {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("options_configure")
-        }
+        action: ElisaActions.configureElisa
     }
 
     NativeMenuItemFromAction {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("options_configure_keybinding")
-        }
+        action: ElisaActions.configureKeybinding
     }
 
     NativeMenuItemFromAction {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("help_report_bug")
-        }
+        action: ElisaActions.reportBug
     }
 
     NativeMenuItemFromAction {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("help_about_app")
-        }
+        action: ElisaActions.aboutElisa
     }
 
     NativeMenuItemFromAction {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("help_about_kde")
-        }
+        action: ElisaActions.aboutKDE
     }
 
     MenuSeparator {
     }
 
     NativeMenuItemFromAction {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("file_quit")
-        }
-    }
+        action: ElisaActions.quit
+    } 
 }

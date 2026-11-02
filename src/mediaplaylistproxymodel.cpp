@@ -559,6 +559,8 @@ void MediaPlayListProxyModel::sourceRowsInserted(const QModelIndex &parent, int 
 
 void MediaPlayListProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
 {
+    d->mCurrentTrackWasValid = d->mCurrentTrack.isValid();
+
     if (d->mShuffleMode != MediaPlayListProxyModel::Shuffle::NoShuffle) {
         if (end - start + 1 == rowCount()) {
             beginRemoveRows(parent, start, end);
@@ -581,7 +583,6 @@ void MediaPlayListProxyModel::sourceRowsAboutToBeRemoved(const QModelIndex &pare
             }
         }
     } else {
-        d->mCurrentTrackWasValid = d->mCurrentTrack.isValid();
         beginRemoveRows(parent, start, end);
     }
 }
@@ -696,7 +697,7 @@ int MediaPlayListProxyModel::remainingTracksDuration() const
 {
     int time = 0;
     for (int i = d->mCurrentTrack.row(); i < rowCount(); i++) {
-        time += d->mPlayListModel->data(index(i, 0), MediaPlayList::DurationRole).toTime().msecsSinceStartOfDay();
+        time += data(index(i, 0), MediaPlayList::DurationRole).toTime().msecsSinceStartOfDay();
     }
     return time;
 }
@@ -797,6 +798,24 @@ void MediaPlayListProxyModel::skipNextTrack(ElisaUtils::SkipReason reason /*= El
     }
 
     notifyCurrentTrackChanged();
+}
+
+void MediaPlayListProxyModel::prepareGaplessNextSource()
+{
+    if (!d->mCurrentTrack.isValid() || !d->mNextTrack.isValid()) {
+        return;
+    }
+
+    if (d->mNextTrack.data(MediaPlayList::ElementTypeRole).value<ElisaUtils::PlayListEntryType>() == ElisaUtils::Radio) {
+        return;
+    }
+
+    const auto nextSource = d->mNextTrack.data(MediaPlayList::ResourceRole).toUrl();
+    if (!nextSource.isValid()) {
+        return;
+    }
+
+    Q_EMIT gaplessNextSourceReady(nextSource);
 }
 
 void MediaPlayListProxyModel::skipPreviousTrack(qint64 position)

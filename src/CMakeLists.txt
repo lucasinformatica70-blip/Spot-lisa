@@ -21,6 +21,7 @@ set(elisaLib_SOURCES
     elisaapplication.cpp
     modeldataloader.cpp
     elisautils.cpp
+    kiofusehelper.cpp
     abstractfile/abstractfilelistener.cpp
     abstractfile/abstractfilelisting.cpp
     filescanner.cpp
@@ -304,6 +305,9 @@ set_source_files_properties(android/PlatformIntegration.qml PROPERTIES
 set_source_files_properties(qml/Theme.qml
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
+set_source_files_properties(qml/ElisaActions.qml
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt_policy(SET QTP0001 NEW)
 qt_add_qml_module(elisaLib
     URI org.kde.elisa
@@ -326,6 +330,7 @@ qt_add_qml_module(elisaLib
         qml/DataTrackView.qml
         qml/DurationSlider.qml
         qml/ElisaMainWindow.qml
+        qml/ElisaActions.qml
         qml/FlatButtonWithToolTip.qml
         qml/FooterBar.qml
         qml/GridBrowserDelegate.qml

@@ -29,7 +29,7 @@ MenuBar {
             text: KI18n.i18nc("@action:inmenu", "Open Playlist…")
             icon.name: "document-open"
             onTriggered: {
-                mainWindow.fileDialog.loadPlaylist()
+                mainWindow.fileDialog.loadPlaylistOrMusicFile()
             }
         }
 
@@ -43,18 +43,14 @@ MenuBar {
         }
 
         NativeMenuItemFromAction {
-            action: Kirigami.Action {
-                fromQAction: ElisaApplication.action("options_configure")
-            }
+            action: ElisaActions.configureElisa 
         }
 
         MenuSeparator {
         }
 
         NativeMenuItemFromAction {
-            action: Kirigami.Action {
-                fromQAction: ElisaApplication.action("file_quit")
-            }
+            action: ElisaActions.quit
         }
     }
     Menu {
@@ -72,10 +68,10 @@ MenuBar {
             onTriggered: mainWindow.visibility === Window.FullScreen ? mainWindow.restorePreviousStateBeforeFullScreen() : mainWindow.goFullScreen()
         }
 
-        Kirigami.Action {
-            fromQAction: ElisaApplication.action("toggle_playlist")
+        MenuItem {
             text: contentView.showPlaylist ? KI18n.i18nc("@action:inmenu", "Hide Playlist") : KI18n.i18nc("@action:inmenu", "Show Playlist")
             icon.name: contentView.showPlaylist ? "show-menu" : "view-media-playlist"
+            onTriggered: ElisaActions.togglePlayListQAction.trigger()
         }
     }
     Menu {
@@ -159,21 +155,16 @@ MenuBar {
         title: KI18n.i18nc("@title:menu", "Help")
 
         NativeMenuItemFromAction {
-            action: Kirigami.Action {
-                fromQAction: ElisaApplication.action("help_about_app")
-            }
+            action: ElisaActions.aboutElisa
         }
 
         NativeMenuItemFromAction {
-            action: Kirigami.Action {
-                fromQAction: ElisaApplication.action("help_about_kde")
-            }
-        }
+            action: ElisaActions.aboutKDE
+        } 
 
         NativeMenuItemFromAction {
-            action: Kirigami.Action {
-                fromQAction: ElisaApplication.action("help_report_bug")
-            }
+            action: ElisaActions.reportBug
         }
+
     }
 }

@@ -8,6 +8,7 @@ pragma ComponentBehavior: Bound
 
 import QtCore
 import QtQuick
+import QtQml
 import QtQuick.Layouts
 import QtQuick.Window
 import QtQuick.Dialogs as Dialogs
@@ -249,41 +250,44 @@ Kirigami.ApplicationWindow {
         nowPlayingLoader.active = true;
     }
 
+    // Avoid Ambiguity with Plasma Global Quit-Shortcut
+    quitAction.enabled: false
+
     // Setup keyboard shortcuts for actions that aren't used in the GUI
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("go_back")
+        fromQAction: ElisaActions.goBackQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("clear_playlist")
+        fromQAction: ElisaActions.clearPlaylistQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("Seek")
+        fromQAction: ElisaActions.seekQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("Scrub")
+        fromQAction: ElisaActions.scrubQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("NextTrack")
+        fromQAction: ElisaActions.nextTrackQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("PreviousTrack")
+        fromQAction: ElisaActions.previousTrackQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("Play-Pause")
+        fromQAction: ElisaActions.playPauseQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("edit_find")
+        fromQAction: ElisaActions.editFindQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("togglePartyMode")
+        fromQAction: ElisaActions.togglePartyModeQAction
     }
 
     Dialogs.FileDialog {

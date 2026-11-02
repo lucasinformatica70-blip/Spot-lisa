@@ -33,7 +33,7 @@ Menu {
             : KI18n.i18nc("@action:inmenu", "Show Playlist")
         icon.name: "view-media-playlist"
 
-        fromQAction: ElisaApplication.action("toggle_playlist")
+        fromQAction: ElisaActions.togglePlayListQAction
     }
 
     MenuSeparator {}
@@ -59,35 +59,32 @@ Menu {
     MenuSeparator {}
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("options_configure")
+        fromQAction: ElisaActions.configureElisaQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("options_configure_keybinding")
+        fromQAction: ElisaActions.configureKeybindingQAction
     }
 
     MenuSeparator {}
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("help_about_app")
+        fromQAction: ElisaActions.aboutElisaQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("help_about_kde")
+        fromQAction: ElisaActions.aboutKDEQAction
     }
 
     Kirigami.Action {
-        fromQAction: ElisaApplication.action("help_report_bug")
+        fromQAction: ElisaActions.reportBugQAction
     }
 
     MenuSeparator {
         visible: ElisaApplication.showSystemTrayIcon
     }
 
-    MenuItem {
-        action: Kirigami.Action {
-            fromQAction: ElisaApplication.action("file_quit")
-        }
-        visible: ElisaApplication.showSystemTrayIcon
+    Kirigami.Action {
+        fromQAction: ElisaActions.quitQAction
     }
 }

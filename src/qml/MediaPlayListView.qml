@@ -225,7 +225,6 @@ Kirigami.Page {
                         id: playListDelegate
 
                         required property var model
-                        property bool nextDelegateHasSection
 
                         width: playListView.width
                         spacing: 0
@@ -527,7 +526,7 @@ Kirigami.Page {
                 }
             }
             elide: Text.ElideRight
-            font.features: { "tnum": 1 }
+            font.features: Object.assign({}, Kirigami.Theme.defaultFont.features, { "tnum": 1 })
         }
     }
 }

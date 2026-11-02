@@ -74,8 +74,8 @@ BasePlayListDelegate {
 
     topInset: 0
     bottomInset: 0
-    leftInset: 0
-    rightInset: 0
+    leftInset: Kirigami.Units.smallSpacing
+    rightInset: Kirigami.Units.smallSpacing
 
     // Set this explicitly since we rely on it; we don't want the theme setting
     // it to false under us!
@@ -247,7 +247,7 @@ BasePlayListDelegate {
                         }
                         textFormat: Text.PlainText
                         font.weight: (playListEntry.isPlaying ? Font.Bold : Font.Normal)
-                        font.features: { "tnum": 1 }
+                        font.features: Object.assign({}, Kirigami.Theme.defaultFont.features, { "tnum": 1 })
                         color: playListEntry.textColor
                     }
                 }
@@ -372,7 +372,7 @@ BasePlayListDelegate {
                 id: durationLabel
                 text: playListEntry.duration
                 font.weight: playListEntry.isPlaying ? Font.Bold : Font.Normal
-                font.features: { "tnum": 1 }
+                font.features: Object.assign({}, Kirigami.Theme.defaultFont.features, { "tnum": 1 })
                 color: playListEntry.textColor
             }
 
